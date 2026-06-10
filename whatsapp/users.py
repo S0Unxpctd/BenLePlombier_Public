@@ -61,7 +61,7 @@ def normalize_phone(raw: str) -> str:
     Accepts:
         "33600000000"     → "+33600000000"
         "+33600000000"    → "+33600000000"
-        "+33 7 67 96 46 62" → "+33600000000"
+        "+33600000000" → "+33600000000"
     Rejects blatantly wrong inputs (empty, non-digit).
     """
     if raw is None:
