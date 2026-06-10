@@ -1,0 +1,17 @@
+{
+  "id": "03_depannage_fuite_simple",
+  "description_fr": "Dépannage urgence fuite simple",
+  "is_synthetic": true,
+  "transcription": "J'interviens en urgence chez Dupont pour une fuite sous l'évier de la cuisine. C'est juste une fuite au niveau du joint, je vais refaire le joint et vérifier que tout est OK. Une heure de travail à peu près.",
+  "expected": {
+    "min_lignes": 2,
+    "max_lignes": 3,
+    "must_include_taux_tva": [0.10],
+    "reference_chantier_keywords": ["fuite", "urgent"],
+    "total_ht_range": [180, 350],
+    "expected_flags_max": 1,
+    "forbidden_flags": [],
+    "must_flag_incoherence": false
+  },
+  "notes": "Simple 1-hour repair job. Should reference the 'Réfection joint' rate (80 € forfait) or use hourly billing (~70 €/h). Urgent context may add +30% surcharge (absorbed). Expect 2 lignes max: prestation + déplacement. Very minimal flags."
+}

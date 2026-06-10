@@ -1,0 +1,17 @@
+{
+  "id": "05_incoherent_double_vasque_cuisine",
+  "description_fr": "Scénario incohérent — double vasque + WC suspendu dans une cuisine",
+  "is_synthetic": true,
+  "transcription": "Le client veut une double vasque et un WC suspendu dans sa cuisine. Je vais faire la pose les deux. C'est 2 jours de travail.",
+  "expected": {
+    "min_lignes": 2,
+    "max_lignes": 3,
+    "must_include_taux_tva": [0.10],
+    "reference_chantier_keywords": ["cuisine"],
+    "total_ht_range": [500, 1000],
+    "expected_flags_max": 1,
+    "forbidden_flags": [],
+    "must_flag_incoherence": true
+  },
+  "notes": "DELIBERATELY ABSURD: double vasque (multi-sink) + WC suspended toilet both in a kitchen. A kitchen has a sink, not a double vasque (that's bathroom). A kitchen does NOT have a toilet. The prompt v2 MUST detect this and emit a SINGLE [COHÉRENCE] flag explaining the illogicality. This is the core test of the coherence self-check in Part 5."
+}

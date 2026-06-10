@@ -1,0 +1,17 @@
+{
+  "id": "01_remplacement_chaudiere",
+  "description_fr": "Remplacement chaudière gaz — appareil fourni par client",
+  "is_synthetic": true,
+  "transcription": "Bonjour, je dois remplacer la chaudière gaz chez Mme Dubois, c'est à Aubagne. La chaudière, elle l'a déjà, je dois juste enlever l'ancienne et mettre la nouvelle. J'ai pour une journée environ, avec tous les raccordements.",
+  "expected": {
+    "min_lignes": 2,
+    "max_lignes": 4,
+    "must_include_taux_tva": [0.10],
+    "reference_chantier_keywords": ["chaudière"],
+    "total_ht_range": [800, 1500],
+    "expected_flags_max": 1,
+    "forbidden_flags": [],
+    "must_flag_incoherence": false
+  },
+  "notes": "Simple standard job: depose + pose chaudière. Client fournit l'appareil, so no fourniture line. Expect 1–2 lines (MO + possibly déplacement). Total should fall in the 1-day standard rate range (350 €/jour base + coefficients if any)."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "02_salle_de_bain_complete",
+  "description_fr": "Rénovation complète salle de bain — rénovation",
+  "is_synthetic": true,
+  "transcription": "Je dois faire une rénovation complète d'une salle de bain chez M. Martin. C'est une vieille maison, donc c'est une rénovation. Je vais enlever la baignoire, poser une baignoire neuve, installer un WC suspendu, mettre un nouveau lavabo avec mitigeur thermostatique. Le carrelage, c'est le client qui va s'en charger. Je prévois 4 jours de travail.",
+  "expected": {
+    "min_lignes": 3,
+    "max_lignes": 5,
+    "must_include_taux_tva": [0.10],
+    "reference_chantier_keywords": ["salle de bain", "rénovation"],
+    "total_ht_range": [2500, 4500],
+    "expected_flags_max": 1,
+    "forbidden_flags": [],
+    "must_flag_incoherence": false
+  },
+  "notes": "Complex renovation: 4 days, multiple equipments, old house (rénovation context). Should apply +15% coeff on daily rate (absorbed, invisible). Expect 3–5 lignes: main d'oeuvre, possible sous-totaux for clarity. Client provides no materials (carrelage client). Total should reflect 4×(350+15%)+ materiaux if any."
+}

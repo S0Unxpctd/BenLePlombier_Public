@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="30">
+<title>Souffl.AI V3 — Live Progress</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: #0f172a; color: #e2e8f0; font-size: 14px; line-height: 1.5; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 24px; font-weight: 800; color: #f8fafc; margin-bottom: 4px; }
+  .subtitle { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+  .actions-required { background: #7f1d1d; border-left: 4px solid #dc2626; padding: 14px 18px; border-radius: 6px; margin-bottom: 20px; }
+  .actions-required.empty { background: #064e3b; border-left-color: #10b981; }
+  .actions-required h2 { font-size: 15px; font-weight: 700; color: #fecaca; margin-bottom: 6px; }
+  .actions-required.empty h2 { color: #a7f3d0; }
+  .actions-required ul { list-style: disc; margin-left: 22px; color: #fef2f2; font-size: 13px; }
+  .actions-required li { margin-bottom: 4px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
+  .card h2 { font-size: 16px; font-weight: 700; color: #f1f5f9; margin-bottom: 10px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; font-size: 12px; }
+  .meta-grid div { background: #0f172a; padding: 8px 10px; border-radius: 4px; }
+  .meta-grid .label { color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .meta-grid .value { color: #f8fafc; font-weight: 600; font-size: 14px; margin-top: 2px; }
+  .phases table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .phases th, .phases td { padding: 7px 10px; text-align: left; border-bottom: 1px solid #334155; }
+  .phases th { background: #0f172a; color: #94a3b8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .status { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; display: inline-block; }
+  .status-pending { background: #334155; color: #cbd5e1; }
+  .status-inprogress { background: #1e40af; color: #dbeafe; }
+  .status-done { background: #166534; color: #bbf7d0; }
+  .status-descoped { background: #78350f; color: #fef3c7; }
+  .events { max-height: 520px; overflow-y: auto; }
+  .event { padding: 8px 0; border-bottom: 1px solid #334155; font-size: 13px; }
+  .event:last-child { border-bottom: none; }
+  .event-meta { color: #94a3b8; font-size: 11px; margin-bottom: 2px; }
+  .event-role { padding: 1px 6px; border-radius: 8px; font-size: 10px; font-weight: 600; }
+  .role-opus { background: #6d28d9; color: #ede9fe; }
+  .role-builder { background: #1e40af; color: #dbeafe; }
+  .role-reviewer { background: #c2410c; color: #fed7aa; }
+  .role-qa { background: #15803d; color: #bbf7d0; }
+  .role-integrator { background: #4338ca; color: #e0e7ff; }
+  pre { background: #0f172a; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 11px; color: #cbd5e1; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: #0f172a; padding: 1px 4px; border-radius: 3px; font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Souffl.AI V3 — Live Progress</h1>
+  <div class="subtitle">Session 3 closed: 2026-04-16 · Phases 2.5 + 3 delivered · Resume at Phase 4 per CHECKPOINT.md</div>
+
+  <div class="actions-required">
+    <h2>⏸️ Actions Required (user-side)</h2>
+    <ul>
+      <li><strong>Deploy Session 3 to Railway.</strong> Push V3; the WhatsApp worker picks up <code>system_prompt.py</code> v2 + Phase 3 UX upgrades. New table <code>voice_debounce_queue</code> is auto-created via <code>db_init</code>.</li>
+      <li><strong>Live-test the new prompt</strong>: 2–3 real voice memos on a whitelisted phone. Check ≤5 line items, no <code>[À COMPLÉTER]</code> on délai, prices aligned with <code>Tarifs_Reference_Artisan.xlsx</code>, coherence flag fires on an absurd dictation.</li>
+      <li><strong>Live-test Phase 3 UX</strong>: recap buttons, menu dispatch, back-to-back vocals &lt; 10s merge, <code>export</code> command.</li>
+      <li><strong>Record a ~30-second welcome voice note</strong>. Place at <code>V3/whatsapp/media/welcome.ogg</code>. Script: <code>V3/whatsapp/media/welcome_script.md</code>. Until then, <code>HELP_TEXT</code> is sent as text.</li>
+      <li><strong>Rotate <code>WHATSAPP_TOKEN</code></strong> to a permanent System User token before sustained use.</li>
+      <li><strong>Backup target</strong> — still deferred until ~10 active artisans.</li>
+      <li><strong>Sentry (optional)</strong> — set <code>SENTRY_DSN</code> for error tracking.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Session summary</h2>
+    <div class="meta-grid">
+      <div><div class="label">Phases done</div><div class="value">0 + 1 + 2 + 2.5 + 3 of 8</div></div>
+      <div><div class="label">Tests</div><div class="value">373 pass · 0 new regressions</div></div>
+      <div><div class="label">New code (S3)</div><div class="value">~2200 lines</div></div>
+      <div><div class="label">Last update</div><div class="value">2026-04-16</div></div>
+    </div>
+  </div>
+
+  <div class="card phases">
+    <h2>Phases</h2>
+    <table>
+      <thead><tr><th>#</th><th>Title</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td>Stabilize current production</td><td><span class="status status-done">done</span></td><td>Backup scaffold + Sentry + Volume docs</td></tr>
+        <tr><td>1</td><td>Prep refactor (core/ extraction)</td><td><span class="status status-done">done</span></td><td>state_store, quote_flow, edit_flow, profile_flow</td></tr>
+        <tr><td>1.5</td><td>bot.py → core/* delegation</td><td><span class="status status-descoped">descoped</span></td><td>In BACKLOG; not a Phase 2 blocker</td></tr>
+        <tr><td>2</td><td>WhatsApp MVP — feature parity</td><td><span class="status status-done">done</span></td><td>QA items 1–13 green (11–13 live-validated end of S2)</td></tr>
+        <tr><td>2.5</td><td>System prompt v2</td><td><span class="status status-done">done</span></td><td>4 known issues addressed; 22 structural invariant tests green</td></tr>
+        <tr><td>3</td><td>WhatsApp UX upgrades</td><td><span class="status status-done">done</span></td><td>Recap + menu + welcome + debounce + export; 35 new tests</td></tr>
+        <tr><td>4</td><td>WhatsApp Flows</td><td><span class="status status-pending">pending</span></td><td></td></tr>
+        <tr><td>5</td><td>Photos + Vision</td><td><span class="status status-pending">pending</span></td><td></td></tr>
+        <tr><td>6</td><td>Message templates + retention</td><td><span class="status status-pending">pending</span></td><td>Opus QA gate</td></tr>
+        <tr><td>7</td><td>Web access + sharing</td><td><span class="status status-pending">pending</span></td><td>Opus QA gate (legal)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Tests</h2>
+    <pre>Baseline (pre-V3):                             80 pass /  2 fail / 27 errors
+V3 Phase 0 (ops):                              21 pass
+V3 Phase 1 (core):                             89 pass
+V3 Phase 2 (whatsapp):                        126 pass
+V3 Phase 2.5 (core/test_system_prompt):        22 pass  ← Session 3
+V3 Phase 3 (test_debounce + test_flows_phase3): 35 pass  ← Session 3
+─────────────────────────────────────────────
+Session 3 total:                              373 pass /  2 fail / 27 errors (clean CI)
+  → Same 2 failures and 27 errors as baseline (pre-existing; NOT caused by V3)
+  → 0 new regressions in Session 3
+  → With --deselect TestRunBackupDryRun: 372 pass / 2 fail / 2 deselected / 27 errors / 0 warnings</pre>
+  </div>
+
+  <div class="card">
+    <h2>Phase 2 QA contract</h2>
+    <pre>  1. Webhook signature verification  ✅  15 unit tests
+  2. send_* payload shapes           ✅  18 unit tests
+  3. Media 2-step + cleanup          ✅  12 unit tests
+  4. State-machine transitions (10+) ✅  15 flow tests
+  5. Command parser (7 + variants)   ✅  38 parametric tests
+  6. Voice → PDF end-to-end          ✅  mocked Meta + LLM + PDF
+  7. Full onboarding (12 steps)      ✅  end-to-end integration
+  8. Edit flow (TVA-0 + LLM patch)   ✅  3 integration tests
+  9. Invoice sums to total           ✅  acompte + solde round-trip
+ 10. Two voice memos in a row        ✅  2 quotes emitted
+ 11. Live voice memo → PDF            ⏸  manual — whitelisted phone required
+ 12. Live onboarding end-to-end       ⏸  manual — whitelisted phone required
+ 13. Telegram bot still works         ✅  validated end of S2</pre>
+  </div>
+
+  <div class="card">
+    <h2>Phase 2.5 QA contract</h2>
+    <pre>  Prompt structure invariants (9 tests)     ✅  placeholders, schema, legal, incoherence, line-cap, flag narrowing
+  Fixture data sanity (5 tests)             ✅  parse, ranges, TVA validity, exactly-one incoherence, coverage
+  Injected-prompt roundtrip (3 tests)       ✅  no residuals on complete profile, empty safe, length cap
+  Prompt compliance extras (5 tests)        ✅  TARIFS bounds, FORMAT section, Parts numbered
+  Full-suite regression                     ✅  0 new failures, 22 new tests added
+  Live quality validation                   ⏸   manual — user sends 2–3 real vocals post-deploy</pre>
+  </div>
+
+  <div class="card">
+    <h2>Phase 3 QA contract</h2>
+    <pre>  3.1 Recap (6 tests)                       ✅  off/on/confirm/cancel/edit/format
+  3.2 Menu (5 tests)                        ✅  one dispatch test per menu id
+  3.3 Welcome (2 tests)                     ✅  fallback-when-missing, audio-when-present
+  3.4 Debounce unit (14 tests)              ✅  enqueue/transcribe/fetch/mark_processed + SQL parameterisation + tz-aware
+  3.4 Debounce integration (4 tests)        ✅  window=0 regression, 2-vocals merge, 15s-apart separate, maybe_flush noop
+  3.5 Export (4 tests)                      ✅  command parse, zero-devis, zip structure, size fallback
+  Full-suite regression                     ✅  0 new failures, 35 new tests added
+  Live UX validation                        ⏸   manual — user tests recap/menu/debounce/export post-deploy</pre>
+  </div>
+
+  <div class="card">
+    <h2>Key events</h2>
+    <div class="events">
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-opus">OPUS</span> · phase_done (S3)</div>
+        <div>Phase 3 complete — 5 WhatsApp UX upgrades (recap, menu, welcome, debounce, export), 35 new tests green, 372 total (clean CI with deselect, 0 warnings).</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-qa">QA</span> · tests_passed (S3)</div>
+        <div>Phase 3 QA: 14 debounce unit tests + 21 flows_phase3 tests = 35 new tests. Gap-fill sub-agent added 3 missing debounce-window behavior tests after Opus audit.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-reviewer">REVIEWER</span> · approved (S3)</div>
+        <div>Phase 3 reviewed in isolated context: all 5 features spec-compliant, regression flags safe, parameterised SQL verified, tz-aware timestamps, zero blocking issues. ✅ APPROVE.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-builder">BUILDER</span> · code_written (S3)</div>
+        <div>Phase 3: flows.py +550 LOC (5 features), debounce.py new (130 LOC), commands.py +EXPORT, db_init.py +voice_debounce_queue, welcome_script.md.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-opus">OPUS</span> · phase_done (S3)</div>
+        <div>Phase 2.5 complete — system_prompt.py v2, 22 new structural tests green, D.441-5 legal citation restored, 337 total (clean CI with deselect).</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-qa">QA</span> · tests_passed (S3)</div>
+        <div>22/22 tests/core/test_system_prompt.py pass. Zero regression in full V3 suite.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-reviewer">REVIEWER</span> · approved (S3)</div>
+        <div>Phase 2.5 reviewed in isolated context: 17/17 tokens preserved, JSON schema unchanged, legal mentions complete, 4 known issues all addressed. ✅ APPROVE.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-builder">BUILDER</span> · code_written (S3)</div>
+        <div>system_prompt.py v2: line-item cap, coherence self-check, reference-grid pricing, tightened [À COMPLÉTER]. 5 synthetic fixtures + README.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-16 · <span class="event-role role-opus">OPUS</span> · session_start (S3)</div>
+        <div>Session 3 started. Scope: Phase 2.5 + Phase 3. Execution: multi-agent (Builder/Reviewer/QA sub-agents, isolated contexts). Baseline verified: 315/2/27 matches checkpoint within ±1.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-opus">OPUS</span> · phase_done (S2)</div>
+        <div>Phase 2 complete — whatsapp/ adapter, 126 tests green, no regressions.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-integrator">INTEGRATOR</span> · integrated (S2)</div>
+        <div>Full V3 suite: 316 pass / 2 fail / 27 err (clean CI). Delta vs Session 1 end: +126 pass, 0 fail, 0 err.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-reviewer">REVIEWER</span> · approved (S2)</div>
+        <div>whatsapp/ transport-isolated, HMAC-SHA256 timing-safe, retries on 5xx/429 only, no secrets in logs. Tests network-free via MockTransport + DI.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-qa">QA</span> · tests_passed (S2)</div>
+        <div>126 Phase 2 tests pass. Onboarding routing bug caught + fixed via 12-step E2E test.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-builder">BUILDER</span> · code_written (S2)</div>
+        <div>V3/whatsapp/{config, users, media, send, commands, webhook, router, flows, README} + railway.whatsapp.json + .env.example.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-opus">OPUS</span> · baseline_verified (S2)</div>
+        <div>Session 1 baseline confirmed: 190 pass / 2 fail / 27 errors matches CHECKPOINT. Starting Phase 2.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-opus">OPUS</span> · session_start (S2)</div>
+        <div>Session 2 started — scope confirmed with user: Phase 2 only + CHECKPOINT handoff.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-opus">OPUS</span> · phase_done (S1)</div>
+        <div>Phase 1 complete — core/ package, 89 tests green, no regressions.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-opus">OPUS</span> · phase_done (S1)</div>
+        <div>Phase 0 complete — 21 Phase 0 tests green, no regressions.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-opus">OPUS</span> · baseline_recorded (S1)</div>
+        <div>Baseline tests: 80 pass / 2 fail / 27 errors. All failures and errors documented as pre-existing.</div>
+      </div>
+      <div class="event">
+        <div class="event-meta">2026-04-14 · <span class="event-role role-opus">OPUS</span> · v3_folder_created (S1)</div>
+        <div>V3/ created, 17 files copied from root (excluding caches, venv, v2_fournitures, scraper).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Handoff</h2>
+    <p>Session 3 closed with Phases 2.5 + 3 delivered. Session 4 resumes at Phase 4 (native WhatsApp Flows for onboarding). The next Opus should read <code>V3/CHECKPOINT.md</code>, then <code>V3/STATE.md</code>, then <code>V3/DECISIONS.md</code>. The original 4 briefs in <code>V3_BRIEFS/</code> still apply verbatim for Phases 4–7.</p>
+  </div>
+
+</div>
+</body>
+</html>

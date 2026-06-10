@@ -1,0 +1,19 @@
+This is a placeholder for the welcome voice note.
+
+The actual file `welcome.ogg` should be provided separately and committed to this directory.
+It should be a ~30-second OGG Opus audio file containing the welcome message in French.
+
+The voice note is played once after an artisan completes the 12-step onboarding.
+
+If `welcome.ogg` is absent when the bot tries to send the welcome, it will fall back to
+sending the help text as a regular text message and log a warning.
+
+To generate the audio:
+1. Read the script in `welcome_script.md`
+2. Record yourself or hire a voice actor (French speaker preferred)
+3. Export as OGG Opus format (audio/ogg, 48 kHz, mono, ~64 kbps)
+4. Place the file as `welcome.ogg` in this directory (V3/whatsapp/media/)
+5. Commit it to the repository
+
+Example ffmpeg command (if you have an MP3):
+  ffmpeg -i welcome.mp3 -codec:a libopus -b:a 64k -vn welcome.ogg

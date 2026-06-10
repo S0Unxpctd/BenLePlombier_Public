@@ -1,0 +1,41 @@
+# Souffl.AI V3 — Dépendances Python
+# pip install -r requirements.txt
+
+# Telegram Bot
+python-telegram-bot==21.3
+
+# OpenAI — Whisper + compatible OpenRouter
+openai==1.35.7
+httpx==0.27.2
+
+# Génération PDF
+weasyprint==63.1
+Jinja2==3.1.4
+
+# Extraction texte PDF (pour onboarding depuis facture type)
+pypdf==4.2.0
+
+# Base de données PostgreSQL (Railway)
+psycopg2-binary==2.9.9
+
+# Envoi email via Resend
+resend
+
+# Utilitaires
+python-dotenv==1.0.1
+
+# ── V3 Phase 0 (optional) ──────────────────────────────────────────────────
+# Error monitoring. Bot no-ops if not installed and SENTRY_DSN unset.
+sentry-sdk>=2.0
+
+# Backup upload to S3-compatible storage (R2 / B2 / S3).
+# Only required when BACKUP_PROVIDER != "dryrun" (default). Dry-run uses stdlib only.
+# Uncomment the next line when you turn on a real backup target.
+# boto3>=1.34
+
+# ── V3 Phase 2 (WhatsApp adapter) ──────────────────────────────────────────
+# Webhook server. The Telegram worker still runs without these — they are
+# only loaded by `whatsapp/webhook.py` which is the entry point for the new
+# Railway service.
+fastapi>=0.110
+uvicorn[standard]>=0.29

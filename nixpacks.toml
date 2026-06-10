@@ -1,0 +1,20 @@
+# Configuration nixpacks pour Railway
+# Installe les dépendances système nécessaires à WeasyPrint et ffmpeg
+
+[phases.setup]
+nixPkgs = [
+  "ffmpeg",              # conversion audio OGG → WAV
+  "pango",               # WeasyPrint (rendu texte) — remplace libpango
+  "cairo",               # WeasyPrint (dessin) — remplace libcairo
+  "gdk-pixbuf",          # WeasyPrint (images)
+  "gobject-introspection",
+  "glib",
+  "fontconfig",
+  "freetype",
+  "harfbuzz",            # shaping de texte requis par pango
+  "fribidi",             # texte bidirectionnel
+  "shared-mime-info",    # détection MIME
+]
+
+[start]
+cmd = "python bot.py"

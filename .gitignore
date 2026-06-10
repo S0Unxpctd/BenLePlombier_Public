@@ -1,0 +1,39 @@
+# ── Secrets ────────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Données utilisateurs ───────────────────────────────────────────────────
+data/
+
+# ── Médias générés / temporaires ───────────────────────────────────────────
+output/
+/tmp/
+*.pdf
+*.ogg
+
+# ── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+.coverage
+htmlcov/
+
+# ── OS / Editors ───────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.~lock.*
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Logs internes ──────────────────────────────────────────────────────────
+events.jsonl
+*.log

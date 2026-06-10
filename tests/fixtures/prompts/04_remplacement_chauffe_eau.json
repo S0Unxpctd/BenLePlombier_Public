@@ -1,0 +1,17 @@
+{
+  "id": "04_remplacement_chauffe_eau",
+  "description_fr": "Remplacement chauffe-eau — appareil fourni client",
+  "is_synthetic": true,
+  "transcription": "Je dois remplacer le chauffe-eau chez Madame Bertrand. Elle a un chauffe-eau 200L qui date, elle en a acheté un neuf. Je dois enlever l'ancien, mettre le nouveau en place, faire les raccordements eau et électricité. C'est une demi-journée de travail.",
+  "expected": {
+    "min_lignes": 2,
+    "max_lignes": 3,
+    "must_include_taux_tva": [0.10],
+    "reference_chantier_keywords": ["chauffe-eau"],
+    "total_ht_range": [250, 450],
+    "expected_flags_max": 1,
+    "forbidden_flags": [],
+    "must_flag_incoherence": false
+  },
+  "notes": "Half-day job (4h or 0.5 day). Reference grid: pose chauffe-eau (MO seule, appareil fourni) = 280 €. Should use forfait or hourly. Expect 2–3 lignes: prestation + possibly déplacement. Client provides the appliance, no fourniture line."
+}
