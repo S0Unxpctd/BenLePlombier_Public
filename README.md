@@ -1,4 +1,4 @@
-# Souffl.AI — Devis vocaux via WhatsApp
+# BenLePlombier/Souffl.ai — Devis vocaux via WhatsApp
 
 > Un plombier dicte un chantier sur WhatsApp. Trente secondes plus tard, il reçoit un devis professionnel en PDF, prêt à envoyer au client.
 
